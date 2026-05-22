@@ -8,7 +8,51 @@ To write a python program for creating File Transfer using TCP Sockets Links
 4. Open the file and then send it to the client in byte format.
 5. In the client side receive the file from server and then write the content into it.
 ## PROGRAM
+~~~
+import socket 
+# Create socket 
+server = socket.socket() 
+# Bind IP and port 
+server.bind(("127.0.0.1", 5555)) 
+# Listen for client 
+server.listen(1) 
+print("Server waiting for connection...") 
+# Accept client 
+client, addr = server.accept() 
+print("Connected to:", addr) 
+# Ask filename 
+filename = input("Enter file name to send: ") 
+# Open and send file 
+with open(filename, "rb") as file: 
+data = file.read() 
+client.send(data) 
+print("File sent successfully") 
+# Close connections 
+client.close() 
+server.close()
+~~~
+~~~
+import socket 
+# Create socket 
+client = socket.socket() 
+# Connect to server 
+client.connect(("127.0.0.1", 5555)) 
+# Save file name 
+save_name = input("Enter name to save file: ") 
+# Receive data 
+data = client.recv(1000000) 
+# Save file 
+with open(save_name, "wb") as file: 
+file.write(data) 
+print("File received successfully") 
+# Close connection 
+client.close()
+~~~
 ## OUPUT
+<img width="1421" height="170" alt="Screenshot 2026-05-22 133653" src="https://github.com/user-attachments/assets/bf7112f3-6b19-4367-b966-c52a23b0bcd0" />
+
+<img width="1412" height="152" alt="Screenshot 2026-05-22 133720" src="https://github.com/user-attachments/assets/04fbb966-f8f2-47cc-aea0-957fb7977f67" />
+
 ## RESULT
 Thus, the python program for creating File Transfer using TCP Sockets Links was 
 successfully created and executed.
